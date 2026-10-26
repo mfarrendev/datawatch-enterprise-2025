@@ -1,0 +1,41 @@
+[project]
+name = "datawatch-enterprise-2025"
+version = "1.0.0"
+description = "Monitoreo de métricas de negocio: detección estadística de anomalías (STL + MAD) y análisis de causas con un agente de Claude que consulta la base en modo solo lectura."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.80.0",
+    "pandas>=2.2.0",
+    "openpyxl>=3.1.0",
+    "duckdb>=1.1.0",
+    "statsmodels>=0.14.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "streamlit>=1.40.0",
+    "plotly>=5.22.0",
+    "tenacity>=8.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2.0",
+    "ruff>=0.6.0",
+]
+
+[tool.uv]
+# No se instala como paquete: se corre desde la raíz con `python -m src.main`.
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+# E501: el largo lo maneja `ruff format`; los prompts en español no se cortan.
+# RUF001-003: el texto en español usa × y comillas tipográficas a propósito.
+ignore = ["E501", "RUF001", "RUF002", "RUF003"]
